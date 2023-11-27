@@ -2,32 +2,52 @@ body{
     background-color: rgb(255, 255, 255);
 }
 
+
 div.top{
-    padding: 10px 40px;
     display: flex;
     justify-content: center;
 }
 
 div.main {
-    padding: 10px 10px;
-    box-shadow: 0px 0px 20px rgb(170, 170, 170);
+    --background-color: aqua;
+    --padding: 10px;
 
     flex-basis: 600px;
-    min-width: 300px;
+    min-width: 200px;
+    
 
-    display: flex;
+    display: inline-flex;
+    
     flex-direction: column;
     justify-content: space-between;
-    gap: 10px 10px;
+    gap: 10px 0px;
+
+}
+
+
+@media only screen and (min-width: 768px) {
+    div.top{
+        padding: 10px 40px;
+    }
+
+    div.main {
+        padding: 10px 10px;
+        box-shadow: 0px 0px 20px rgb(170, 170, 170);
+
+        min-width: 300px;
+    }
 }
 
 div.container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 100px);
-    grid-auto-rows: max-content;
-    
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    --grid-template-columns: repeat(auto-fill, 100px);
+    grid-auto-columns: max-content;
+
     min-height: 30px;
     background-color: #dff3f2;
+
+    box-shadow: 0px 0px 4px rgb(102, 102, 102);
 }
 
 div#selected{
@@ -36,7 +56,7 @@ div#selected{
 
 div.item {
     background-color: white;
-    box-shadow: 0px 0px 5px rgb(177, 177, 177);
+    box-shadow: 0px 0px 5px rgb(131, 131, 131);
     margin: 5px 5px; 
     padding: 5px;
     --max-width: 100px;
@@ -47,24 +67,31 @@ div.item p {
     margin: 0;
 }
 
+div.item p.details{
+    color: rgb(80, 80, 80);
+    font-size: 0.8em;
+}
+
 div.item img{
-    --background-color: lightblue;
     width:40px;
     height:40px;
 }
 
-div.item:hover {
-    background-color: #e0c8b200;
-
-    outline: solid;
-    outline-width: 2px;
-    outline-color: rgb(233, 141, 29);
+@media (hover: hover) {
+    div.item:hover{
+        background-color: #e0c8b200;
     
-    cursor: pointer;
+        outline: solid;
+        outline-width: 2px;
+        outline-color: rgb(233, 141, 29);
+        
+        cursor: pointer;
+    }
 }
 
 div.container#trash{
     opacity: 40%;
+    
 }
 
 div.add {

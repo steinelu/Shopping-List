@@ -52,7 +52,7 @@ function mouseUp(e){
 
 
 
-function createListItem(text){
+function createListItem(text, details){
 	var item = document.createElement("div")
 	item.classList.add("item")
 	item.addEventListener("mousedown", mouseDown)
@@ -63,7 +63,16 @@ function createListItem(text){
 
 	var textelement = document.createElement("p")
 	textelement.innerHTML = text
+	textelement.classList.add("name")
 	item.appendChild(textelement)
+
+	if(details != undefined){
+		var textelement = document.createElement("p")
+		textelement.innerHTML = 
+		textelement.classList.add("details")
+		item.appendChild(textelement)
+	}
+	
 	return item
 }
 
@@ -75,17 +84,19 @@ async function queryServerForImage(name){
 }
 
 function search(){
-	const image = queryServerForImage("banana")
+	//const image = queryServerForImage("banana")
 
-	var node = document.querySelector('input[name="input"]')
-	var input = node.value
-	if (input.length <= 0) {
+	var node = document.querySelector('input[name="name"]')
+	var name = node.value
+	if (name.length <= 0) {
 		return
 	}
-	console.log(input)
 	node.value = ""
 
-	var child = createListItem(input)
+	node = document.querySelector('input[name="details"]')
+	var details = node.value
+	node.value = ""
+	var child = createListItem(name, details)
 	results.appendChild(child)
 }
 
@@ -96,6 +107,9 @@ function clearHistory() {
 	}
 }
 
+/* * * *
+	Storage - Cache 
+* * * */
 
 var storage = window.localStorage
 
