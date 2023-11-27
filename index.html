@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Shopping List</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!--link rel='stylesheet' type='text/css' media='screen' href='main.css'-->
+    <script type="text/javascript" src='main.js'></script>
+    <link type="text/css" rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="top">
+        <div class="main">
+            <div class="container" id="selected"></div>
+            <!--br-->
+            <div class="container" id="history"></div>
+            <!--br-->
+            <div class="adder">
+                <div class="container" id="results"></div>
+                <br>
+                <div class="add">
+                    <div>
+                        <input type="text" name="input">
+                        <button onclick="search()">Search</button>
+                        <button onclick="clearHistory()">Clear</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!--br-->
+            
+            <div class="container" id="trash">
+                <!-- <div class="item">
+                    <img src="images/banana.svg">
+                    <p>Banana</p>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
