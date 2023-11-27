@@ -9,13 +9,9 @@ div.top{
 }
 
 div.main {
-    --background-color: aqua;
-    --padding: 10px;
-
     flex-basis: 600px;
     min-width: 200px;
     
-
     display: inline-flex;
     
     flex-direction: column;
@@ -96,4 +92,21 @@ div.container#trash{
 
 div.add {
     justify-content: center;
+}
+
+/*
+    Settings menu
+*/
+
+div#settings img{
+    width: 20px;
+    outline: solid;
+}
+
+div#settings ul li{
+    display: none;
+}
+
+div#settings:focus ul li{
+    display: block;
 }
