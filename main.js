@@ -36,11 +36,11 @@ function mouseDown(e){
 	}
 
 	timer = window.setTimeout(() => {
-		console.log("timer fired")
+		//console.log("timer fired")
 		//e.target.closest(".item").classList.add("tobedeleted")
 		document.querySelector("#trash").appendChild(e.target.closest(".item"))
 	}, 2000)
-	console.log(timer)
+	//console.log(timer)
 }
 
 function mouseUp(e){
@@ -68,7 +68,7 @@ function createListItem(text, details){
 
 	if(details != undefined){
 		var textelement = document.createElement("p")
-		textelement.innerHTML = 
+		textelement.innerHTML = details
 		textelement.classList.add("details")
 		item.appendChild(textelement)
 	}
@@ -96,6 +96,7 @@ function search(){
 	node = document.querySelector('input[name="details"]')
 	var details = node.value
 	node.value = ""
+	
 	var child = createListItem(name, details)
 	results.appendChild(child)
 }
@@ -119,28 +120,36 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 
 function populateFromStorage(){
-	selectedItems = JSON.parse(storage.getItem("selectedItems"))
-	historyItems  = JSON.parse(storage.getItem("historyItems"))
+	var selectedItems = JSON.parse(storage.getItem("selectedItems"))
+	var historyItems  = JSON.parse(storage.getItem("historyItems"))
 	
 	for(let item of selectedItems){
-		document.getElementById("selected").appendChild(createListItem(item))
+		console.log(item)
+		document.getElementById("selected").appendChild(createListItem(item[0], item[1]))
 	}
 
 	for(let item of historyItems){
-		document.getElementById("history").appendChild(createListItem(item))
+		document.getElementById("history").appendChild(createListItem(item[0], item[1]))
 	}
-	
+}
+
+function extractItemAndDetails(node){
+	console.log(node)
+	var name = node.querySelector('p.name').innerText
+	var details = node.querySelector('p.details').innerText
+	return [name, details]
 }
 
 function persistToStorage(){
 	var sel= []
 	for (let child of document.getElementById("selected").children){
-		sel.push(child.querySelector("p").innerText)
+		sel.push(extractItemAndDetails(child))
 	}
 
 	var his = []
 	for (let child of document.getElementById("history").children){
-		his.push(child.querySelector("p").innerText)
+		his.push(extractItemAndDetails(child))
+		//his.push(child.querySelector('p[name="name"]').innerText)
 	}
 
 	storage.setItem("selectedItems", JSON.stringify(sel))
