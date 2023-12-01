@@ -51,11 +51,14 @@ div#selected{
 
 div.item {
     background-color: white;
-    box-shadow: 0px 0px 5px rgb(131, 131, 131);
+    box-shadow: 0px 0px 2px rgb(131, 131, 131);
     margin: 5px 5px; 
     padding: 5px;
     --max-width: 100px;
     text-align: center;
+    cursor: pointer;
+
+    transition: box-shadow 600ms;
 }
 
 div.item p {
@@ -74,13 +77,7 @@ div.item img{
 
 @media (hover: hover) {
     div.item:hover{
-        background-color: #e0c8b200;
-    
-        outline: solid;
-        outline-width: 2px;
-        outline-color: rgb(233, 141, 29);
-        
-        cursor: pointer;
+        box-shadow: 0px 0px 5px rgb(131, 131, 131);
     }
 }
 

@@ -76,6 +76,10 @@ function createListItem(text, details){
 	return item
 }
 
+var imagespath = './avaiableImages.json'
+//const avaiableImages = JSON.parse(require('./avaiableImages.json'))
+//import user from './avaiableImages.json' assert { type: 'json' };;
+
 async function queryServerForImage(name){
 	port = 8080
 	const url = "localhost:${port}/icon/${name}.svg"
