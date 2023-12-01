@@ -51,6 +51,14 @@ function mouseUp(e){
 };
 
 
+// https://www.telerik.com/blogs/how-to-prevent-cross-site-scripting-xss-javascript
+function encodeInput (input) {
+	const encoded = document.createElement('div');
+	encoded.innerText = input;
+	return encoded.innerHTML;
+}
+// <script>alert('Stored XSS attack!')</script>
+
 
 function createListItem(text, details){
 	var item = document.createElement("div")
@@ -87,12 +95,7 @@ async function queryServerForImage(name){
 	return content
 }
 
-// https://www.telerik.com/blogs/how-to-prevent-cross-site-scripting-xss-javascript
-function encodeInput (input) {
-	const encoded = document.createElement('div');
-	encoded.innerText = input;
-	return encoded.innerHTML;
-}
+
 
 function search(){
 	//const image = queryServerForImage("banana")
