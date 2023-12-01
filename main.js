@@ -62,13 +62,13 @@ function createListItem(text, details){
 	item.appendChild(img)
 
 	var textelement = document.createElement("p")
-	textelement.innerHTML = text
+	textelement.innerHTML = encodeInput(text)
 	textelement.classList.add("name")
 	item.appendChild(textelement)
 
 	if(details != undefined){
 		var textelement = document.createElement("p")
-		textelement.innerHTML = details
+		textelement.innerHTML = encodeInput(details)
 		textelement.classList.add("details")
 		item.appendChild(textelement)
 	}
@@ -85,6 +85,13 @@ async function queryServerForImage(name){
 	const url = "localhost:${port}/icon/${name}.svg"
 	const content = fetch(url, {method:"GET"}).then(x => {return x.body})
 	return content
+}
+
+// https://www.telerik.com/blogs/how-to-prevent-cross-site-scripting-xss-javascript
+function encodeInput (input) {
+	const encoded = document.createElement('div');
+	encoded.innerText = input;
+	return encoded.innerHTML;
 }
 
 function search(){
