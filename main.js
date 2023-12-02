@@ -66,14 +66,7 @@ class Command {
 var commandHistory = new CommandHistory()
 
 document.addEventListener('click', (e) => {
-	/*if(e.target.tagName=="DIV" && e.target.classList.contains("item")){
-		handleItemClicked(e.target)
-	}
-	if(e.target.parentNode.classList.contains("item")){
-		handleItemClicked(e.target.parentNode)
-	}*/
-
-	var item = e.target.closest(".item")
+		var item = e.target.closest(".item")
 	if (item){
 		handleItemClicked(item)
 	}
@@ -127,7 +120,6 @@ function mouseDown(e){
 		}, ()=>{
 			document.querySelector('#' + id).appendChild(node)
 		})
-
 	}, 2000)
 	//console.log(timer)
 }
@@ -173,15 +165,21 @@ function createListItem(text, details){
 	return item
 }
 
+var currentURL = window.location.href
 var imagespath = './avaiableImages.json'
 //const avaiableImages = JSON.parse(require('./avaiableImages.json'))
 //import user from './avaiableImages.json' assert { type: 'json' };;
 
-async function queryServerForImage(name){
-	port = 8080
-	const url = "localhost:${port}/icon/${name}.svg"
+/*async function queryServerForImage(name){
+	const url = "/images/${name}.svg"
 	const content = fetch(url, {method:"GET"}).then(x => {return x.body})
 	return content
+}*/
+
+var imageIndex = fetch(imagespath, {method:"GET"}).then(x => {return x.json()})
+
+function queryServerForImage(name){
+	return fetch(imagespath, {method:"GET"}).then(x => {return x.body})
 }
 
 
