@@ -1,4 +1,70 @@
 
+class CommandHistory{
+	constructor() {
+		this.past = []
+		this.future = []
+	}
+
+	addAndExec(command){
+		command.run()
+		this.past.push(command)
+		this.future = []
+	}
+
+	undo(){
+		if (this.past.length <= 0)
+			return false
+
+		var cmd = this.past.pop()
+		cmd.undo()
+		this.future.push(cmd)
+		return true
+	}
+
+	redo(){
+		if (this.future.length <= 0)
+			return false
+		var cmd = this.future.pop()
+		cmd.run()
+		this.past.push(cmd)
+		return true
+	}
+
+	createAndExec(execF, undoF){
+		this.addAndExec(new Command(execF, undoF))
+	}
+
+	clear(){
+		this.past = []
+		this.future = []
+	}
+
+	get undoable(){
+		return this.past.length > 0
+	}
+
+	get redoable(){
+		return this.future.length > 0
+	}
+}
+
+class Command {
+	constructor (execF, undoF){
+		this.execF = execF
+		this.undoF = undoF
+	}
+
+	run(){
+		this.execF()
+	}
+
+	undo(){
+		this.undoF()
+	}
+}
+
+var commandHistory = new CommandHistory()
+
 document.addEventListener('click', (e) => {
 	/*if(e.target.tagName=="DIV" && e.target.classList.contains("item")){
 		handleItemClicked(e.target)
@@ -13,24 +79,35 @@ document.addEventListener('click', (e) => {
 	}
 });
 
-
 function handleItemClicked(target){
 	var container = target.parentNode
 	var element = target
 
 	if (container.id == "selected") {
-		document.getElementById("history").appendChild(element)
+		commandHistory.createAndExec(()=>{
+			document.getElementById("history").appendChild(element)
+		}, ()=>{
+			document.getElementById("selected").appendChild(element)
+		})
+		//document.getElementById("history").appendChild(element)
 	}
 	else {
-		document.getElementById("selected").appendChild(element)
+		commandHistory.createAndExec(()=>{
+			document.getElementById("selected").appendChild(element)
+		}, ()=>{
+			document.getElementById(container.id).appendChild(element)
+		})
+		//document.getElementById("selected").appendChild(element)
 	}
 }
+
+
 
 
 // https://copyprogramming.com/howto/javascript-handle-mouse-hold-event-js-code-example
 var timer
 function mouseDown(e){
-	console.log("holding")
+	//console.log("holding")
 	if (timer){
 		window.clearTimeout(timer)
 	}
@@ -38,7 +115,19 @@ function mouseDown(e){
 	timer = window.setTimeout(() => {
 		//console.log("timer fired")
 		//e.target.closest(".item").classList.add("tobedeleted")
-		document.querySelector("#trash").appendChild(e.target.closest(".item"))
+
+		//document.querySelector("#trash").appendChild(e.target.closest(".item"))
+
+		var id = e.target.closest(".container").id
+		console.log(id)
+		var node = e.target.closest(".item")
+
+		commandHistory.createAndExec(()=>{
+			document.querySelector("#trash").appendChild(node)
+		}, ()=>{
+			document.querySelector('#' + id).appendChild(node)
+		})
+
 	}, 2000)
 	//console.log(timer)
 }
@@ -112,7 +201,13 @@ function search(){
 	node.value = ""
 	
 	var child = createListItem(name, details)
-	results.appendChild(child)
+	var results = document.querySelector("#results")
+
+	commandHistory.createAndExec(()=>{
+		results.appendChild(child)
+	}, ()=>{
+		results.removeChild(child)
+	})
 }
 
 function clearHistory() {
@@ -138,7 +233,7 @@ function populateFromStorage(){
 	var historyItems  = JSON.parse(storage.getItem("historyItems"))
 	
 	for(let item of selectedItems){
-		console.log(item)
+		//console.log(item)
 		document.getElementById("selected").appendChild(createListItem(item[0], item[1]))
 	}
 
@@ -148,7 +243,7 @@ function populateFromStorage(){
 }
 
 function extractItemAndDetails(node){
-	console.log(node)
+	//console.log(node)
 	var name = node.querySelector('p.name').innerText
 	var details = node.querySelector('p.details').innerText
 	return [name, details]
