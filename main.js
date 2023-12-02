@@ -141,13 +141,13 @@ function encodeInput (input) {
 // <script>alert('Stored XSS attack!')</script>
 
 
-function createListItem(text, details){
+function createListItem(text, details, imagename){
 	var item = document.createElement("div")
 	item.classList.add("item")
 	item.addEventListener("mousedown", mouseDown)
 
 	var img = document.createElement("img")
-	img.src = "images/apple.svg"
+	img.src = "images/"+imagename+".svg"
 	item.appendChild(img)
 
 	var textelement = document.createElement("p")
@@ -166,7 +166,6 @@ function createListItem(text, details){
 }
 
 var currentURL = window.location.href
-var imagespath = './avaiableImages.json'
 //const avaiableImages = JSON.parse(require('./avaiableImages.json'))
 //import user from './avaiableImages.json' assert { type: 'json' };;
 
@@ -176,7 +175,7 @@ var imagespath = './avaiableImages.json'
 	return content
 }*/
 
-var imageIndex = fetch(imagespath, {method:"GET"}).then(x => {return x.json()})
+var imageIndex = (await fetch('./availableImages.json', {method:"GET"}).then(x => {return x.json()})).map((s)=>{return s.slice(0, -3)})
 
 function queryServerForImage(name){
 	return fetch(imagespath, {method:"GET"}).then(x => {return x.body})
@@ -185,8 +184,6 @@ function queryServerForImage(name){
 
 
 function search(){
-	//const image = queryServerForImage("banana")
-
 	var node = document.querySelector('input[name="name"]')
 	var name = node.value
 	if (name.length <= 0) {
@@ -197,8 +194,13 @@ function search(){
 	node = document.querySelector('input[name="details"]')
 	var details = node.value
 	node.value = ""
+
+	let imgsrc = "apple0" // default for now
+	if (imageIndex.includes(name.toLowerCase())){
+		imgsrc = name
+	}
 	
-	var child = createListItem(name, details)
+	var child = createListItem(name, details, imgsrc)
 	var results = document.querySelector("#results")
 
 	commandHistory.createAndExec(()=>{
