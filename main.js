@@ -147,7 +147,7 @@ function createListItem(text, details, imagename){
 	item.addEventListener("mousedown", mouseDown)
 
 	var img = document.createElement("img")
-	img.src = "images/"+imagename+".svg"
+	img.src = imagename
 	item.appendChild(img)
 
 	var textelement = document.createElement("p")
@@ -161,21 +161,20 @@ function createListItem(text, details, imagename){
 		textelement.classList.add("details")
 		item.appendChild(textelement)
 	}
-	
 	return item
 }
 
-var currentURL = window.location.href
-//const avaiableImages = JSON.parse(require('./avaiableImages.json'))
-//import user from './avaiableImages.json' assert { type: 'json' };;
 
-/*async function queryServerForImage(name){
-	const url = "/images/${name}.svg"
-	const content = fetch(url, {method:"GET"}).then(x => {return x.body})
-	return content
-}*/
+function loadImageIndex(){
+	return fetch('./availableImages.json', {method:"GET"})
+			.then(x => {return x.json()})
+}
 
-var imageIndex = (await fetch('./availableImages.json', {method:"GET"}).then(x => {return x.json()})).map((s)=>{return s.slice(0, -3)})
+let imageIndex
+(async () => {
+	imageIndex = await loadImageIndex();
+})();
+
 
 function queryServerForImage(name){
 	return fetch(imagespath, {method:"GET"}).then(x => {return x.body})
@@ -196,11 +195,12 @@ function search(){
 	node.value = ""
 
 	let imgsrc = "apple0" // default for now
+	console.log(imageIndex)
 	if (imageIndex.includes(name.toLowerCase())){
-		imgsrc = name
+		imgsrc = name.toLowerCase()
 	}
 	
-	var child = createListItem(name, details, imgsrc)
+	var child = createListItem(name, details, "images/"+imgsrc+".svg")
 	var results = document.querySelector("#results")
 
 	commandHistory.createAndExec(()=>{
@@ -233,12 +233,11 @@ function populateFromStorage(){
 	var historyItems  = JSON.parse(storage.getItem("historyItems"))
 	
 	for(let item of selectedItems){
-		//console.log(item)
-		document.getElementById("selected").appendChild(createListItem(item[0], item[1]))
+		document.getElementById("selected").appendChild(createListItem(item[0], item[1], item[2]))
 	}
 
 	for(let item of historyItems){
-		document.getElementById("history").appendChild(createListItem(item[0], item[1]))
+		document.getElementById("history").appendChild(createListItem(item[0], item[1], item[2]))
 	}
 }
 
@@ -246,7 +245,8 @@ function extractItemAndDetails(node){
 	//console.log(node)
 	var name = node.querySelector('p.name').innerText
 	var details = node.querySelector('p.details').innerText
-	return [name, details]
+	var imgsrc = node.querySelector('img').src
+	return [name, details, imgsrc]
 }
 
 function persistToStorage(){
@@ -260,6 +260,8 @@ function persistToStorage(){
 		his.push(extractItemAndDetails(child))
 		//his.push(child.querySelector('p[name="name"]').innerText)
 	}
+
+	
 
 	storage.setItem("selectedItems", JSON.stringify(sel))
 	storage.setItem("historyItems", JSON.stringify(his))
