@@ -8,12 +8,7 @@ div.top{
     justify-content: center;
 }
 
-
-
 div.main, div.searchbox {
-    flex-direction: column;
-    align-items:center;
-
     flex-basis: 600px;
     min-width: 200px;
     
@@ -139,23 +134,8 @@ div#settings:focus ul li{
 }
 
 
-/*
-    Navigation
-*/
-
-div.nav {
-    position: sticky;
-    top: 0;
-    background-color: aqua;
-}
-
-div.stickybottom {
+div#search {
     position: sticky;
     bottom: 0;
-}
-
-div.searchbox {
     background-color: white;
-    padding: 5px 0px;
-    box-shadow: 0px 0px 5px rgb(141, 141, 141);
 }
