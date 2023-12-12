@@ -105,6 +105,7 @@ div.item img{
 
 div.container#trash{
     opacity: 40%;
+    display: none;
 }
 
 div.add {
@@ -116,7 +117,6 @@ div.add {
 */
 
 div#settings {
-
     position: absolute;
 }
 
@@ -131,4 +131,26 @@ div#settings ul li{
 
 div#settings:focus ul li{
     display: block;
+}
+
+
+/*
+    Navigation
+*/
+
+div.nav {
+    position: sticky;
+    top: 0;
+    background-color: aqua;
+}
+
+div.stickybottom {
+    position: sticky;
+    bottom: 0;
+}
+
+div.searchbox {
+    background-color: white;
+    padding: 5px 0px;
+    box-shadow: 0px 0px 5px rgb(141, 141, 141);
 }

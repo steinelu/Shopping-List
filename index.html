@@ -11,20 +11,23 @@
 </head>
 
 <body>
-    <div id="settings" tabindex="1">
+    <!--div id="settings" tabindex="1">
         <ul style="list-style-type: none;"><img src="./images/banana.svg">
             <li>Color</li>
             <li>Server</li>
         </ul>
-    </div>
+    </div-->
+
+   
+
     <div class="top">
         <div class="main">
             <div class="container" id="selected"></div>
             <!--br-->
             <div class="container" id="history"></div>
             <!--br-->
-            <div class="adder">
-                <div class="container" id="results"></div>
+            <!--div class="adder">
+                <div class="container" id="results_"></div>
                 <br>
                 <div class="add">
                     <div>
@@ -34,7 +37,7 @@
                         <button onclick="clearHistory()">Clear</button>
                     </div>
                 </div>
-            </div>
+            </div-->
             
             <!--br-->
             
@@ -45,6 +48,19 @@
                 </div> -->
             </div>
         </div>
+    </div>
+    <!--div class="nav">
+        <div class="settings"></div>
+        <div class="controll">
+            <button onclick="commandHistory.undo()">Undo</button>
+            <button onclick="commandHistory.redo()">Redo</button>
+        </div>
+    </div-->
+    <div class="searchbox stickybottom">
+        <div class="container" id="results"></div>
+        <input type="text" name="name">
+        <!--input type="text" name="details"-->
+        <button onclick="search()">Search</button>
     </div>
 </body>
 </html>

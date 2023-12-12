@@ -66,7 +66,7 @@ class Command {
 var commandHistory = new CommandHistory()
 
 document.addEventListener('click', (e) => {
-		var item = e.target.closest(".item")
+	var item = e.target.closest(".item")
 	if (item){
 		handleItemClicked(item)
 	}
@@ -175,12 +175,60 @@ let imageIndex
 	imageIndex = await loadImageIndex();
 })();
 
+/*fetch('./availableImages.json', {method:"GET"})
+						.then(x => {x.json()})
+						.then(x => {
+							document.querySelector("#search").disabled = false
+							imageIndex = x
+							console.log("imageIndex set")
+							console.log(x)
+						})*/
+						
 
-function queryServerForImage(name){
+
+/*function queryServerForImage(name){
 	return fetch(imagespath, {method:"GET"}).then(x => {return x.body})
+}*/
+
+/*document.addEventListener("keyup", (event) => {
+	// https://developer.mozilla.org/en-US/docs/Web/API/Element/keyup_event
+	if (event.isComposing || event.keyCode === 229) {
+	  return;
+	}
+	liveSearch()
+});
+*/
+document.addEventListener("input", event =>{
+	liveSearch()
+})
+
+function liveSearch(){
+	clearSearchResults()
+	
+	var str = document.querySelector('input[name="name"]').value
+	if (str.length <= 0) {
+		return
+	}
+
+	let imgsrc = "apple0" // default
+	// depending on performance -> build BkTree
+
+	var results = document.querySelector("#results")
+
+	for (let item of imageIndex){
+		if (item.startsWith(str)){
+			var child = createListItem(item, "", "images/"+item+".svg")
+			results.appendChild(child)
+		}
+	}
 }
 
-
+function clearSearchResults(){
+	var node = document.querySelector("div#results")
+	while(node.firstChild){
+		node.firstChild.remove()
+	}
+}
 
 function search(){
 	var node = document.querySelector('input[name="name"]')
@@ -195,13 +243,15 @@ function search(){
 	node.value = ""
 
 	let imgsrc = "apple0" // default for now
-	console.log(imageIndex)
+	//console.log(imageIndex)
 	if (imageIndex.includes(name.toLowerCase())){
 		imgsrc = name.toLowerCase()
 	}
 	
 	var child = createListItem(name, details, "images/"+imgsrc+".svg")
 	var results = document.querySelector("#results")
+
+	//console.log(results)
 
 	commandHistory.createAndExec(()=>{
 		results.appendChild(child)
@@ -269,4 +319,5 @@ function persistToStorage(){
 }
 
 window.onunload = persistToStorage
+
 
