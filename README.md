@@ -6,6 +6,7 @@ Ease of use is the main focus, no distractions.
 
 Should be useable on any platform => HTML CSS and Js, since browser exists practically everywhere.
 
+
 ## How To Use
 Just follow this link ->
 <https://steinelu.github.io/Shopping-List>
@@ -21,16 +22,20 @@ The clear button, clear the items from the history.
 
 A functionality is also to put an item into the trash by holding it for some seconds. (will propably be removed)
 
+
 ## TODO
     - [x] host it using GitHub pages
     - [x] Saveing the list locally, no constant internet connection requiered
     - [] Redo/Undo (partly implemented)
-    - [] Live search
+    - [-] Live search
+    - [] sync lists with some backend
     - [] Shareable Lists
     - [] Multiple Lists -> tabs
     - [] Installable via PWA (Progressiv Web App)
     - [] Creating lots of images
     - [] Support multiple Languages
+
+
 ### utils
 
 ```sh
