@@ -8,7 +8,12 @@ div.top{
     justify-content: center;
 }
 
-div.main {
+
+
+div.main, div.searchbox {
+    flex-direction: column;
+    align-items:center;
+
     flex-basis: 600px;
     min-width: 200px;
     
