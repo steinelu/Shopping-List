@@ -198,8 +198,25 @@ let imageIndex
 	liveSearch()
 });
 */
-document.addEventListener("input", event =>{
+
+document.addEventListener("keyup", event =>{ // input event change
 	liveSearch()
+	document.body.style.backgroundColor = "red";
+})
+
+document.addEventListener("change", event =>{ // input event change
+	liveSearch()
+	document.body.style.backgroundColor = "blue";
+})
+document.addEventListener("input", event =>{ // input event change
+	liveSearch()
+	document.body.style.backgroundColor = "green";
+})
+
+document.addEventListener("search", event =>{ // on hitting enter
+	liveSearch()
+	document.body.style.backgroundColor = "yellow";
+	console.log("search event")
 })
 
 function liveSearch(){
