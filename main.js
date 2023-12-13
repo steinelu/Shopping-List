@@ -199,25 +199,40 @@ let imageIndex
 });
 */
 
+/**
+ * Experiment with mobile chrome (android)
+ * input event doesn't work
+ * other events work (aka change, keyup, search)
+ * 
+ * => keyup event is used for the live search preview feature
+ * 
+ * 
+ * Mozilla (android)
+ * input and search not working
+ * 
+ * change and keyup work
+ */
+
 document.addEventListener("keyup", event =>{ // input event change
 	liveSearch()
-	document.body.style.backgroundColor = "red";
+	//document.body.style.backgroundColor = "red";
 })
 
-document.addEventListener("change", event =>{ // input event change
-	liveSearch()
-	document.body.style.backgroundColor = "blue";
-})
-document.addEventListener("input", event =>{ // input event change
-	liveSearch()
-	document.body.style.backgroundColor = "green";
-})
+// document.addEventListener("change", event =>{ // input event change
+// 	liveSearch()
+// 	document.body.style.backgroundColor = "blue";
+// })
 
-document.addEventListener("search", event =>{ // on hitting enter
-	liveSearch()
-	document.body.style.backgroundColor = "yellow";
-	console.log("search event")
-})
+// document.addEventListener("input", event =>{ // input event change
+// 	liveSearch()
+// 	document.body.style.backgroundColor = "green";
+// })
+
+// document.addEventListener("search", event =>{ // on hitting enter
+// 	liveSearch()
+// 	document.body.style.backgroundColor = "yellow";
+// 	console.log("search event")
+// })
 
 function liveSearch(){
 	clearSearchResults()
