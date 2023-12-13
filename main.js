@@ -100,7 +100,7 @@ function handleItemClicked(target){
 // https://copyprogramming.com/howto/javascript-handle-mouse-hold-event-js-code-example
 var timer
 function mouseDown(e){
-	//console.log("holding")
+	console.log("holding")
 	if (timer){
 		window.clearTimeout(timer)
 	}
@@ -141,10 +141,13 @@ function encodeInput (input) {
 // <script>alert('Stored XSS attack!')</script>
 
 
+var delete_feature = false
 function createListItem(text, details, imagename){
 	var item = document.createElement("div")
 	item.classList.add("item")
-	item.addEventListener("mousedown", mouseDown)
+	if (delete_feature){ // disabled for now
+		item.addEventListener("mousedown", mouseDown)
+	}
 
 	var img = document.createElement("img")
 	img.src = imagename
@@ -307,7 +310,9 @@ var storage = window.localStorage
 
 document.addEventListener("DOMContentLoaded", ()=>{
 	populateFromStorage()
-	document.body.addEventListener("mouseup", mouseUp);
+	if (delete_feature){ // turned off for now
+		document.body.addEventListener("mouseup", mouseUp);
+	}
 });
 
 function populateFromStorage(){
