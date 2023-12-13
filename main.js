@@ -141,7 +141,7 @@ function encodeInput (input) {
 // <script>alert('Stored XSS attack!')</script>
 
 
-var delete_feature = false
+var delete_feature = true
 function createListItem(text, details, imagename){
 	var item = document.createElement("div")
 	item.classList.add("item")
@@ -251,7 +251,7 @@ function liveSearch(){
 	var results = document.querySelector("#results")
 
 	for (let item of imageIndex){
-		if (item.startsWith(str)){
+		if (item.startsWith(str.toLowerCase())){
 			var child = createListItem(item, "", "images/"+item+".svg")
 			results.appendChild(child)
 		}
